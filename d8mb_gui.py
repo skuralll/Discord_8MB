@@ -1,5 +1,8 @@
 from pystray import Icon, MenuItem, Menu
 from PIL import Image
+import schedule
+import threading
+import time
 import sys
 import os
 import d8mb
@@ -22,6 +25,8 @@ class TaskTray:
         self.hook()
 
     def run(self):
+        task_thread = threading.Thread(target=self.rehook_scheduler)
+        task_thread.start()
         self.icon.run()
 
     def stop(self):
@@ -29,3 +34,9 @@ class TaskTray:
 
     def hook(self):
         d8mb.begin_hook()
+
+    def rehook_scheduler(self):  # keyboardモジュールのバグ対策
+        schedule.every(5).seconds.do(self.hook)
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
