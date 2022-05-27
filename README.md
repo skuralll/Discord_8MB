@@ -1,0 +1,2 @@
+# Discord_8MB
+Windows版Discordに画像を貼り付けた際、自動で画像を8MB以下にリサイズする
