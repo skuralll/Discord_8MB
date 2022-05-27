@@ -1,3 +1,4 @@
 Pillow
 keyboard
 pywin32
+pystray
