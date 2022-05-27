@@ -16,7 +16,6 @@ class TaskTray:
     def __init__(self):
         self.status = False
         menu = Menu(
-                    MenuItem('Rebind', self.hook),
                     MenuItem('Exit', self.stop),
                 )
         self.icon = Icon(name='Discord_8MB', title='Discord_8MB', icon=Image.open(resource_path("icon.ico")), menu=menu)
