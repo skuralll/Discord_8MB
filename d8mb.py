@@ -49,7 +49,7 @@ def on_paste():
             resize_image_clip()
         keyboard.press("ctrl+v")
     except OSError as e:
-        print(e)
+        begin_hook()
     keyboard.release("ctrl+v")
 
 
