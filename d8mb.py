@@ -1,9 +1,7 @@
-import keyboard
 from win32gui import GetWindowText, GetForegroundWindow
 import win32clipboard
 from PIL import ImageGrab, Image
 from io import BytesIO
-
 
 IMAGE_SIZE_MAX = 8000000
 
@@ -41,21 +39,3 @@ def resize_image_clip():
         image_io.truncate(0)
     copy_image_to_clipboard(image_io.getvalue()[14:])
     image_io.close()
-
-
-def on_paste():
-    try:
-        if is_in_discord() and is_clip_image():
-            resize_image_clip()
-        keyboard.press("ctrl+v")
-    except OSError as e:
-        begin_hook()
-    keyboard.release("ctrl+v")
-
-
-def begin_hook():
-    try:
-        keyboard.remove_hotkey("ctrl+v")
-    except KeyError:
-        pass
-    keyboard.add_hotkey("ctrl+v", on_paste, (), True)

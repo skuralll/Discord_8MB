@@ -1,4 +1,4 @@
 Pillow
-keyboard
 pywin32
 pystray
+pynput

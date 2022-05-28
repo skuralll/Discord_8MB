@@ -1,11 +1,15 @@
 from pystray import Icon, MenuItem, Menu
 from PIL import Image
-import schedule
-import threading
-import time
 import sys
 import os
-import d8mb
+import threading
+
+
+def run_gui():
+    system_tray = TaskTray()
+    thread = threading.Thread(target=system_tray.run, args=(), daemon=True)
+    thread.start()
+    return thread
 
 
 def resource_path(relative_path):
@@ -22,21 +26,9 @@ class TaskTray:
                     MenuItem('Exit', self.stop),
                 )
         self.icon = Icon(name='Discord_8MB', title='Discord_8MB', icon=Image.open(resource_path("icon.ico")), menu=menu)
-        self.hook()
 
     def run(self):
-        task_thread = threading.Thread(target=self.rehook_scheduler)
-        task_thread.start()
         self.icon.run()
 
     def stop(self):
         self.icon.stop()
-
-    def hook(self):
-        d8mb.begin_hook()
-
-    def rehook_scheduler(self):  # keyboardモジュールのバグ対策
-        schedule.every(5).seconds.do(self.hook)
-        while True:
-            schedule.run_pending()
-            time.sleep(1)
